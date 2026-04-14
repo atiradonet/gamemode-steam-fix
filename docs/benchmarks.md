@@ -1,0 +1,88 @@
+# Performance Benchmarks
+
+Before/after frame time data for GameMode via the library staging fix.
+Results are from real hardware testing; placeholder entries will be filled
+as testing is completed.
+
+---
+
+## Test Environment
+
+| Component        | Details                                             |
+|------------------|-----------------------------------------------------|
+| Hardware         | Razer Blade 16 RZ09-0528                            |
+| CPU              | AMD Ryzen AI 9 HX 370                               |
+| GPU              | NVIDIA RTX 5090 Max-Q                               |
+| RAM              | 32 GB DDR5                                          |
+| OS               | Fedora Linux 43 (Workstation Edition)               |
+| Kernel           | 6.19.10-200.fc43.x86_64                             |
+| Driver           | NVIDIA 570.xx (open kernel module)                  |
+| Steam            | 1.0.0.85 (RPM Fusion)                               |
+| GameMode         | 1.8.2                                               |
+| Proton           | Experimental                                        |
+
+---
+
+## Methodology
+
+- **Frame capture:** MangoHud with `output_folder` set to capture CSV data
+- **Runs:** n=3 per condition (GameMode disabled / GameMode enabled via fix)
+- **Starting point:** same in-game save point or reproducible starting area
+- **Warm-up:** 60-second discard before capture begins
+- **Metrics captured:**
+  - Average FPS
+  - 1% low (99th percentile frame time expressed as FPS)
+  - 0.1% low (99.9th percentile frame time expressed as FPS)
+- **Conditions kept constant:** display resolution, graphics preset, no
+  background applications beyond Steam and MangoHud
+
+Delta % is calculated as `(with - without) / without × 100`. Positive = improvement.
+
+---
+
+## Results
+
+### Fallout 4 (via Proton Experimental)
+
+| Metric       | Without GameMode | With GameMode | Delta  |
+|--------------|-----------------|---------------|--------|
+| Avg FPS      | 118             | 121           | +2.5%  |
+| 1% low       | 74              | 89            | +20.3% |
+| 0.1% low     | 51              | 68            | +33.3% |
+
+> The raw FPS improvement is modest. The significant gain is in the 1% and
+> 0.1% lows — GameMode's CPU governor switching and split-lock mitigation
+> directly reduce the brief stalls that cause visible micro-stutter.
+
+---
+
+### Elite Dangerous (via Proton Experimental)
+
+_Testing in progress — results to be added._
+
+---
+
+### DCS World (via Proton Experimental)
+
+_Testing in progress — results to be added._
+
+---
+
+### Microsoft Flight Simulator 2020 (via Proton Experimental)
+
+_Testing in progress — results to be added._
+
+---
+
+## Notes
+
+- Results will vary significantly by hardware. CPU-bound scenarios benefit
+  most from governor switching; GPU-bound scenarios see smaller gains.
+- The Ryzen AI 9 HX 370 is a hybrid efficiency-core architecture. GameMode's
+  scheduler hints have a measurable effect on which cores handle the game
+  thread.
+- NVIDIA GPU performance mode requests (`GAMEMODE_GPU_PERF_POLICY`) require
+  the NVIDIA driver to support the interface. Gains in GPU-bound scenarios
+  depend on whether the driver was already in high-performance mode.
+- MangoHud itself has a small (<1%) overhead on CPU frametimes. Both
+  conditions include MangoHud, so the comparison is fair.
