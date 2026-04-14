@@ -100,7 +100,8 @@ Success indicator: `Entering Game Mode... Requesting update of governor policy t
 |---|---|---|---|---|---|
 | Winter Burrow | Unity | Native | CPU light | ✅ | |
 | Fallout 4 | Gamebryo | Proton | CPU bound | ✅ | |
-| Batman: Arkham Origins | Unreal Engine 3 | Proton | GPU bound | ✅ | |
+| Doom Eternal | id Tech 7 | Native Linux | GPU bound | ✅ | Native Linux via SteamLinuxRuntime_sniper container. LD_LIBRARY_PATH fix required. |
+| Batman: Arkham Origins | Unreal Engine 3 | Proton | GPU bound | ✅ | Confirmed on two separate runs. First run after Doom Eternal may fail due to GameMode cleanup timing — relaunch if needed. |
 | Elite Dangerous | Cobra | Proton | CPU bound | ⏳ Pending | |
 | DCS World | DCS Engine | Proton | CPU heavy | ⏳ Pending | |
 | Mass Effect Legendary Edition | Unreal Engine 3/4 | Proton | GPU bound | ⏳ Pending | |
