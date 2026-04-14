@@ -105,8 +105,15 @@ gamemodeauto: dlopen failed - libgamemode.so: cannot open shared object file: No
 
 **Success (after fix):**
 ```
-gamemodeauto: GameMode is now active
+gamemoded: Entering Game Mode...
+gamemoded: governor was initially set to [powersave]
+gamemoded: Requesting update of governor policy to performance
+gamemoded: Requesting update of split_lock_mitigate to 0
 ```
+
+Check with `journalctl --user -b --no-pager | grep -i gamemode`.
+
+> **Note on ioprio errors:** Lines like `ERROR: Skipping ioprio on client […]: ioprio was (0) but we expected (4)` may appear after the success lines above. These are expected and benign — some short-lived Proton/Wine child processes exit before GameMode can set their I/O priority. The CPU governor switch (the most impactful optimisation) has already succeeded at that point.
 
 You can also query the daemon from a terminal while the game is running:
 
@@ -114,7 +121,7 @@ You can also query the daemon from a terminal while the game is running:
 gamemoded -s $GAMEPID
 ```
 
-Replace `$GAMEPID` with the game's process ID (find it with `pgrep -a wine`
+Replace `$GAMEPID` with the game's process ID (find it with `pgrep -a Fallout4`
 or `pgrep -a proton`). If GameMode is active for that PID, the daemon will
 report `active`.
 
