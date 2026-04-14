@@ -111,9 +111,29 @@ Success indicator: `Entering Game Mode... Requesting update of governor policy t
 | War Thunder | Dagor Engine | Native Linux | Mixed | ⏳ Pending | |
 | Icewind Dale: Enhanced Edition | Infinity Engine | Proton | CPU light | ⏳ Pending | |
 | Flashback | Custom | Proton | CPU light | ⏳ Pending | |
+| Microsoft Flight Simulator 2020 | Asobo Engine | Proton | CPU heavy | ⚠️ Partial | Two-stage launcher — gamemoderun covers the launcher process but not the FlightSimulator.exe sim process. Known limitation with external launcher games. |
 
 Benchmark frame time data (avg FPS, 1% lows, 0.1% lows) will be added progressively as testing continues. CPU-intensive titles (DCS World, Elite Dangerous) are expected to show the most measurable improvement in frame time consistency.
 
 ---
 
 Tested on different hardware? Open an issue or PR with your compatibility results. Include your distro, kernel, GPU, GameMode version, and game.
+
+---
+
+## Known Limitations
+
+### Games with external launchers
+Some games use a two-stage launch process where Steam launches a launcher binary,
+which then spawns the actual game executable. `gamemoderun` wraps the launcher
+but the game process is spawned outside the wrapper chain and does not register
+with GameMode.
+
+Affected games confirmed so far:
+- Microsoft Flight Simulator 2020
+
+Workaround: none currently. The game still benefits from GameMode optimisations
+applied to the launcher process, but the primary game binary does not register.
+This is a GameMode/launcher architecture limitation, not a fix issue.
+
+Upstream reference: https://github.com/FeralInteractive/gamemode/issues
