@@ -8,18 +8,20 @@ as testing is completed.
 
 ## Test Environment
 
-| Component        | Details                                             |
-|------------------|-----------------------------------------------------|
-| Hardware         | Razer Blade 16 RZ09-0528                            |
-| CPU              | AMD Ryzen AI 9 HX 370                               |
-| GPU              | NVIDIA RTX 5090 Max-Q                               |
-| RAM              | 32 GB DDR5                                          |
-| OS               | Fedora Linux 43 (Workstation Edition)               |
-| Kernel           | 6.19.10-200.fc43.x86_64                             |
-| Driver           | NVIDIA 570.xx (open kernel module)                  |
-| Steam            | 1.0.0.85 (RPM Fusion)                               |
-| GameMode         | 1.8.2                                               |
-| Proton           | Experimental                                        |
+| Component | Detail |
+|---|---|
+| Hardware | Razer Blade 16 RZ09-0528 |
+| CPU | AMD Ryzen AI 9 HX 370 (12 cores, 24 threads) |
+| GPU | NVIDIA GeForce RTX 5090 Max-Q (24GB VRAM) |
+| iGPU | AMD Radeon 890M |
+| RAM | 32GB |
+| Storage | Lexar NM790 2TB NVMe (btrfs) |
+| OS | Fedora Linux 43 (Workstation Edition) |
+| Kernel | 6.19.10-200.fc43.x86_64 |
+| NVIDIA Driver | 580.126.18 |
+| GameMode | 1.8.2 |
+| Steam | 1.0.0.85 |
+| Proton | Experimental |
 
 ---
 
@@ -86,3 +88,31 @@ _Testing in progress — results to be added._
   depend on whether the driver was already in high-performance mode.
 - MangoHud itself has a small (<1%) overhead on CPU frametimes. Both
   conditions include MangoHud, so the comparison is fair.
+
+---
+
+## Compatibility Matrix
+
+GameMode activation confirmed via `journalctl --user` log output.
+Success indicator: `Entering Game Mode... Requesting update of governor policy to performance`
+
+| Game | Engine | Native/Proton | CPU/GPU Bound | GameMode Confirmed | Notes |
+|---|---|---|---|---|---|
+| Winter Burrow | Unity | Native | CPU light | ✅ | |
+| Fallout 4 | Gamebryo | Proton | CPU bound | ✅ | |
+| Batman: Arkham Origins | Unreal Engine 3 | Proton | GPU bound | ✅ | |
+| Elite Dangerous | Cobra | Proton | CPU bound | ⏳ Pending | |
+| DCS World | DCS Engine | Proton | CPU heavy | ⏳ Pending | |
+| Mass Effect Legendary Edition | Unreal Engine 3/4 | Proton | GPU bound | ⏳ Pending | |
+| Halo: The Master Chief Collection | Various | Proton | Mixed | ⏳ Pending | |
+| STAR WARS Squadrons | Frostbite | Proton | GPU bound | ⏳ Pending | |
+| SnowRunner | Swarm Engine | Proton | CPU bound | ⏳ Pending | |
+| War Thunder | Dagor Engine | Native Linux | Mixed | ⏳ Pending | |
+| Icewind Dale: Enhanced Edition | Infinity Engine | Proton | CPU light | ⏳ Pending | |
+| Flashback | Custom | Proton | CPU light | ⏳ Pending | |
+
+Benchmark frame time data (avg FPS, 1% lows, 0.1% lows) will be added progressively as testing continues. CPU-intensive titles (DCS World, Elite Dangerous) are expected to show the most measurable improvement in frame time consistency.
+
+---
+
+Tested on different hardware? Open an issue or PR with your compatibility results. Include your distro, kernel, GPU, GameMode version, and game.
